@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026년 건강보험료 계산기</title>
+  <meta name="description" content="2026년 기준 중위소득별 건강보험료를 계산해드립니다. 직장가입자, 지역가입자, 혼합 가입자 모두 지원합니다." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 배경 파티클 -->
+  <div class="bg-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="app-wrapper">
+    <!-- 헤더 -->
+    <header class="app-header">
+      <div class="header-badge">2026년 최신 기준</div>
+      <h1 class="header-title">건강보험료 <span class="gradient-text">계산기</span></h1>
+      <p class="header-subtitle">기준 중위소득 40~200% 구간 · 가구원 수 1~6인 · 직장 / 지역 / 혼합 / 맞벌이 가입자</p>
+      <div class="maker-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        삼호동행정복지센터 맞춤형복지팀 제작
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- 계산기 섹션 -->
+      <section class="calculator-section">
+        <!-- Step 1: 가구 설정 -->
+        <div class="card step-card">
+          <div class="step-header">
+            <span class="step-badge">STEP 1</span>
+            <h2 class="step-title">가구 정보 설정</h2>
+          </div>
+
+          <div class="form-grid">
+            <!-- 가구원 수 -->
+            <div class="form-group">
+              <label class="form-label" for="household-size">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                가구원 수
+              </label>
+              <div class="select-group" id="household-size">
+                <button class="size-btn active" data-size="1" id="size-1">1인</button>
+                <button class="size-btn" data-size="2" id="size-2">2인</button>
+                <button class="size-btn" data-size="3" id="size-3">3인</button>
+                <button class="size-btn" data-size="4" id="size-4">4인</button>
+                <button class="size-btn" data-size="5" id="size-5">5인</button>
+                <button class="size-btn" data-size="6" id="size-6">6인</button>
+              </div>
+            </div>
+
+            <!-- 중위소득 비율 -->
+            <div class="form-group">
+              <label class="form-label" for="income-ratio">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                기준 중위소득 비율
+              </label>
+              <div class="slider-container">
+                <input type="range" id="income-ratio" class="slider" min="40" max="200" step="10" value="100" />
+                <div class="slider-labels">
+                  <span>40%</span>
+                  <span>100%</span>
+                  <span>200%</span>
+                </div>
+                <div class="slider-value-display">
+                  <span id="ratio-display">100%</span>
+                  <span class="slider-income-amount" id="income-amount">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 가입자 유형 -->
+            <div class="form-group">
+              <label class="form-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                가입자 유형
+              </label>
+              <div class="type-group type-group-4">
+                <label class="type-card active" id="type-card-employee" for="type-employee">
+                  <input type="radio" id="type-employee" name="insurer-type" value="employee" checked />
+                  <div class="type-icon">🏢</div>
+                  <div class="type-name">직장가입자</div>
+                  <div class="type-desc">급여 기준 부과</div>
+                </label>
+                <label class="type-card" id="type-card-local" for="type-local">
+                  <input type="radio" id="type-local" name="insurer-type" value="local" />
+                  <div class="type-icon">🏠</div>
+                  <div class="type-name">지역가입자</div>
+                  <div class="type-desc">소득·재산 점수</div>
+                </label>
+                <label class="type-card" id="type-card-mixed" for="type-mixed">
+                  <input type="radio" id="type-mixed" name="insurer-type" value="mixed" />
+                  <div class="type-icon">🔀</div>
+                  <div class="type-name">혼합가입자</div>
+                  <div class="type-desc">직장+지역 혼합</div>
+                </label>
+                <label class="type-card" id="type-card-dual" for="type-dual">
+                  <input type="radio" id="type-dual" name="insurer-type" value="dual" />
+                  <div class="type-icon">💑</div>
+                  <div class="type-name">맞벌이 부부</div>
+                  <div class="type-desc">각자 직장가입</div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 맞벌이 소득 분담 패널 -->
+          <div class="dual-panel" id="dual-panel" style="display:none;">
+            <div class="dual-divider"></div>
+            <div class="form-group">
+              <label class="form-label" for="dual-ratio-slider">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                배우자 소득 비율
+              </label>
+              <div class="dual-income-visual" id="dual-income-visual">
+                <div class="dual-bar">
+                  <div class="dual-bar-a" id="dual-bar-a"></div>
+                  <div class="dual-bar-b" id="dual-bar-b"></div>
+                </div>
+                <div class="dual-labels">
+                  <span class="dual-label-a">
+                    <span class="dual-dot dot-a"></span>
+                    본인 <span id="dual-ratio-a">60%</span>
+                    <span class="dual-amount" id="dual-amount-a">—</span>
+                  </span>
+                  <span class="dual-label-b">
+                    <span class="dual-dot dot-b"></span>
+                    배우자 <span id="dual-ratio-b">40%</span>
+                    <span class="dual-amount" id="dual-amount-b">—</span>
+                  </span>
+                </div>
+              </div>
+              <div class="slider-container" style="margin-top:6px;">
+                <input type="range" id="dual-ratio-slider" class="slider slider-purple" min="30" max="70" step="5" value="40" />
+                <div class="slider-labels">
+                  <span>배우자 30%</span>
+                  <span>균등 50%</span>
+                  <span>배우자 70%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 계산 버튼 -->
+        <button class="calc-btn" id="calculate-btn" onclick="calculate()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-3"/><path d="M9 7h6v10"/><path d="M14 2l5 5-5 5"/><path d="M19 7H9"/></svg>
+          건강보험료 계산하기
+        </button>
+
+        <!-- 결과 섹션 -->
+        <div class="result-section" id="result-section" style="display:none;">
+          <!-- 요약 카드 -->
+          <div class="result-summary">
+            <div class="summary-header">
+              <h2 class="summary-title">계산 결과</h2>
+              <div class="summary-badge" id="result-type-badge">직장가입자</div>
+            </div>
+            <div class="summary-info" id="result-summary-info"></div>
+          </div>
+
+          <!-- 주요 결과 -->
+          <div class="result-cards" id="result-cards"></div>
+
+          <!-- 상세 내역 -->
+          <div class="detail-section" id="detail-section"></div>
+
+          <!-- 전체 구간 테이블 -->
+          <div class="table-section">
+            <h3 class="table-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+              40%~200% 전체 구간 보험료표
+            </h3>
+            <div class="table-wrapper">
+              <table class="insurance-table" id="full-table">
+                <thead>
+                  <tr id="table-header"></tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 면책 문구 -->
+          <div class="disclaimer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p>본 계산기는 <strong>2026년 건강보험료 및 기준 중위소득</strong> 기준으로 제공됩니다. 지역가입자는 재산·자동차 등 추가 변수가 반영되지 않으므로 <strong>소득 기반 추정치</strong>입니다. 정확한 보험료는 <a href="https://www.nhis.or.kr" target="_blank" rel="noopener">국민건강보험공단</a>에서 확인하세요.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 요율 정보 카드 -->
+      <aside class="info-aside">
+        <div class="info-card">
+          <h3 class="info-card-title">📋 2026년 건강보험료율</h3>
+          <ul class="info-list">
+            <li>
+              <span class="info-label">건강보험료율</span>
+              <span class="info-value highlight">7.19%</span>
+            </li>
+            <li>
+              <span class="info-label">├ 근로자 부담</span>
+              <span class="info-value">3.595%</span>
+            </li>
+            <li>
+              <span class="info-label">└ 사업주 부담</span>
+              <span class="info-value">3.595%</span>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <span class="info-label">장기요양보험료율</span>
+              <span class="info-value highlight">13.14%</span>
+            </li>
+            <li>
+              <span class="info-label">(건강보험료 대비)</span>
+              <span class="info-value"></span>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <span class="info-label">지역 점수당 금액</span>
+              <span class="info-value highlight">211.5원</span>
+            </li>
+            <li>
+              <span class="info-label">지역 보험료 하한</span>
+              <span class="info-value">20,160원</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3 class="info-card-title">👨‍👩‍👧‍👦 2026년 기준 중위소득</h3>
+          <ul class="info-list median-list" id="median-list"></ul>
+        </div>
+
+        <div class="info-card">
+          <h3 class="info-card-title">❓ 가입자 유형 안내</h3>
+          <div class="type-info">
+            <div class="type-info-item">
+              <span class="type-info-icon">🏢</span>
+              <div>
+                <strong>직장가입자</strong>
+                <p>보수월액 × 7.19% (근로자 3.595% 본인 부담)</p>
+              </div>
+            </div>
+            <div class="type-info-item">
+              <span class="type-info-icon">🏠</span>
+              <div>
+                <strong>지역가입자</strong>
+                <p>소득점수 기반 × 211.5원 (재산 미포함 추정)</p>
+              </div>
+            </div>
+            <div class="type-info-item">
+              <span class="type-info-icon">🔀</span>
+              <div>
+                <strong>혼합가입자</strong>
+                <p>세대 내 직장+지역 가입자 공존 세대 합산</p>
+              </div>
+            </div>
+            <div class="type-info-item">
+              <span class="type-info-icon">💑</span>
+              <div>
+                <strong>맞벌이 부부</strong>
+                <p>각자 직장가입자 · 소득 분담 비율 조절 · 부부 합산 납부액 산출</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <footer class="app-footer">
+    <div class="footer-maker">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      삼호동행정복지센터 맞춤형복지팀 제작
+    </div>
+    <p>2026년 건강보험료는 보건복지부 고시 기준입니다. 실제 보험료는 개인 상황에 따라 다를 수 있습니다.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
